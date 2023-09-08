@@ -1,0 +1,7 @@
+server:
+  port: 2025
+spring:
+  data:
+    mongodb+srv:
+      host: cluster0.fzg9tyo.mongodb.net
+      port: 27017
