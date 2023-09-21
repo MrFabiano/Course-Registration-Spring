@@ -11,8 +11,9 @@ import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfigurati
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class, MongoReactiveAutoConfiguration.class})
-@EnableMongoRepositories
+@SpringBootApplication
+//(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class, MongoReactiveAutoConfiguration.class})
+//@EnableMongoRepositories
 public class SpringAngularApplication {
 
 	public static void main(String[] args) {
@@ -23,7 +24,9 @@ public class SpringAngularApplication {
 	CommandLineRunner initDatabase(CourseRepository courseRepository) {
 		return args -> {
 			courseRepository.deleteAll();
-			Course course = new Course("Angular com spring", "Back-end");
+			Course course = new Course();
+			course.setName("Java-Spring");
+			course.setCategory("Back-end");
 			courseRepository.save(course);
 
 		};
