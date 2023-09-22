@@ -1,6 +1,10 @@
 package com.spring.agular.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spring.agular.enums.Category;
+import com.spring.agular.enums.convertes.CategoryConverter;
+import com.spring.agular.enums.convertes.Status;
+import com.spring.agular.enums.convertes.StatusConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +14,9 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -29,24 +36,16 @@ public class Course {
     @Column(length = 200, nullable = false)
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Length(max = 100)
-    //@Pattern(regexp = "Back-end|Front-end")
     @Column(length = 20, nullable = false)
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
-    @NotNull
-    @NotBlank
-    @Length(max = 10)
-    @Pattern(regexp = "Ativo|Inativo")
+
     @Column(length = 20, nullable = false)
-    private String status = "Ativo";
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 
-    public Course(String name, String category) {
-        this.name = name;
-        this.category = category;
-    }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
+    private List<Lesson> lessonList = new ArrayList<>();
 
-    public  Course(){}
 }
