@@ -1,7 +1,9 @@
 package com.spring.agular.controller;
 
+import com.spring.agular.Dtos.CourseDTO;
 import com.spring.agular.model.Course;
 import com.spring.agular.repository.CourseRepository;
+import com.spring.agular.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -15,51 +17,39 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@AllArgsConstructor
 @Validated
-public class
- CourseController {
+@AllArgsConstructor
+public class CourseController {
 
-    private final CourseRepository courseRepository;
+    private final CourseService courseService;
 
     @GetMapping
-    public List<Course> list(){
-        return courseRepository.findAll();
+    public List<CourseDTO> list(){
+        return courseService.list();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getById(@PathVariable @NotNull @Positive  Long id){
-       return courseRepository.findById(id)
-               .map(recordFound -> ResponseEntity.ok().body(recordFound))
-               .orElse(ResponseEntity.notFound().build());
+    public CourseDTO getById(@PathVariable @NotNull @Positive  Long id){
+       return courseService.getById(id);
+
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Course create(@RequestBody @Valid Course course){
-        System.out.println(course.getName());
-        return courseRepository.save(course);
+    public CourseDTO create(@RequestBody @Valid CourseDTO course){
+        return courseService.create(course);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@RequestBody @Valid Course course, @PathVariable Long id){
-        return courseRepository.findById(id)
-                .map(recordFound -> {
-                    recordFound.setName(course.getName());
-                    recordFound.setCategory(course.getCategory());
-                    Course update = courseRepository.save(recordFound);
-                    return ResponseEntity.ok().body(update);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public CourseDTO updateCourse(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course){
+        return courseService.updateCourse(course, id);
+
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id){
-        return courseRepository.findById(id)
-                .map(recordFound -> {
-                    courseRepository.deleteById(id);
-                    return ResponseEntity.noContent().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull @Positive Long id){
+       courseService.delete(id);
     }
 }
