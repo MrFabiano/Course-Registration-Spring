@@ -4,6 +4,7 @@ import com.spring.agular.Dtos.CourseDTO;
 import com.spring.agular.Dtos.LessonDTO;
 import com.spring.agular.enums.Category;
 import com.spring.agular.model.Course;
+import com.spring.agular.model.Lesson;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,6 +33,17 @@ public class CourseMapper {
         }
         course.setName(courseDTO.name());
         course.setCategory(convertCategory(courseDTO.category()));
+
+       List<Lesson> lessons = courseDTO.lessons().stream().map(
+                lessonDTO -> {
+                    var lesson = new Lesson();
+                    lesson.setId(lessonDTO.id());
+                    lesson.setName(lessonDTO.name());
+                    lesson.setYouTubeUrl(lessonDTO.youTubeUrl());
+                    lesson.setCourse(course);
+                    return lesson;
+                }).collect(Collectors.toList());
+              course.setLessonList(lessons);
         return course;
     }
 
