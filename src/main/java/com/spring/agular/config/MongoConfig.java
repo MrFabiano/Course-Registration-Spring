@@ -1,4 +1,4 @@
-package com.spring.agular.config;
+/*package com.spring.agular.config;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -33,5 +33,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
         return Collections.singleton("course");
     }
 
-}
 
+}
+*/

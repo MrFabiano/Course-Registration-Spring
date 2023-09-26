@@ -1,6 +1,8 @@
 package com.spring.agular.enums;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -12,7 +14,7 @@ public enum Category {
 
     private final String value;
 
-   private Category(String value){
+   Category(String value){
        this.value = value;
    }
 

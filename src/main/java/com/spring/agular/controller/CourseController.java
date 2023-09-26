@@ -1,13 +1,13 @@
 package com.spring.agular.controller;
 
 import com.spring.agular.Dtos.CourseDTO;
-import com.spring.agular.model.Course;
 import com.spring.agular.repository.CourseRepository;
 import com.spring.agular.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CourseController {
 
+    @Autowired
     private final CourseService courseService;
 
     @GetMapping
@@ -41,7 +42,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public CourseDTO updateCourse(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course){
+    public CourseDTO updateCourse(@PathVariable @NotNull Long id, @RequestBody @Valid CourseDTO course){
         return courseService.updateCourse(id, course);
 
 

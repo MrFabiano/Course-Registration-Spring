@@ -17,7 +17,7 @@ public class CourseMapper {
         if (course == null) {
             return null;
         }
-        List<LessonDTO> lessonDTOS = course.getLessonList()
+        List<LessonDTO> lessonDTOS = course.getLessons()
                 .stream()
                 .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(),
                         lesson.getYouTubeUrl()))
@@ -28,8 +28,8 @@ public class CourseMapper {
 
     public Course toCourse(CourseDTO courseDTO) {
         Course course = new Course();
-        if (courseDTO.id() != null) {
-            course.setId(courseDTO.id());
+        if (courseDTO.name() != null) {
+            course.setName(courseDTO.name());
         }
         course.setName(courseDTO.name());
         course.setCategory(convertCategory(courseDTO.category()));
@@ -43,7 +43,7 @@ public class CourseMapper {
                     lesson.setCourse(course);
                     return lesson;
                 }).collect(Collectors.toList());
-              course.setLessonList(lessons);
+              course.setLessons(lessons);
         return course;
     }
 

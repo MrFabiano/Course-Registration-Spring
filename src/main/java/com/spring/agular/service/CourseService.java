@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,7 +22,9 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+
     private final CourseMapper courseMapper;
+
 
     public List<CourseDTO> list() {
         return courseRepository.findAll()
@@ -39,15 +42,15 @@ public class CourseService {
         return courseMapper.toDTO(courseRepository.save(courseMapper.toCourse(course)));
     }
 
-    public CourseDTO updateCourse(@NotNull @Positive Long id, @Valid CourseDTO courseDTO) {
+    public CourseDTO updateCourse(@NotNull  @Positive Long id, @Valid CourseDTO courseDTO) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     Course course = courseMapper.toCourse(courseDTO);
                     recordFound.setName(courseDTO.name());
                     recordFound.setCategory(courseMapper.convertCategory(courseDTO.category()));
                     //recordFound.setLessonList(course.getLessonList());
-                    recordFound.getLessonList().clear();
-                    course.getLessonList().forEach(recordFound.getLessonList()::add);
+                    recordFound.getLessons().clear();
+                    course.getLessons().forEach(recordFound.getLessons()::add);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 }).orElseThrow(()-> new RecordNotFoundException(id));
 
