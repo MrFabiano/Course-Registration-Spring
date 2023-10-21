@@ -1,7 +1,0 @@
-#server:
-#  port: 8080
-#spring:
-#  data:
-#    mongodb+srv:
-#      host: cluster0.fzg9tyo.mongodb.net
-#      port: 27017
