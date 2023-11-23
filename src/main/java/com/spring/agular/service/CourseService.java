@@ -1,6 +1,7 @@
 package com.spring.agular.service;
 
 import com.spring.agular.Dtos.CourseDTO;
+import com.spring.agular.Dtos.CoursePageDTO;
 import com.spring.agular.Dtos.mapper.CourseMapper;
 import com.spring.agular.exception.RecordNotFoundException;
 import com.spring.agular.model.Course;
@@ -10,6 +11,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -32,6 +35,11 @@ public class CourseService {
                 .map(courseMapper::toDTO)
                 .collect(Collectors.toList());
     }
+//     public CoursePageDTO list(int pageNumber, int pageSize){
+//         Page<Course> page =  courseRepository.findAll(PageRequest.of(pageNumber, pageSize));
+//         List<CourseDTO> courseDTOS = page.get().map(courseMapper::toDTO).collect(Collectors.toList());
+//         return new CoursePageDTO(courseDTOS, page.getTotalElements(), page.getTotalPages());
+//     }
 
     public CourseDTO getById(@NotNull @Positive Long id) {
         return courseRepository.findById(id).map(courseMapper::toDTO)

@@ -21,23 +21,25 @@ public class SpringAngularApplication {
 	CommandLineRunner initDatabase(CourseRepository courseRepository) {
 		return args -> {
 			courseRepository.deleteAll();
-			Course course = new Course();
-			course.setName("Java-Spring");
-			course.setCategory(Category.BACK_END);
 
-			Lesson l = new Lesson();
-			l.setName("Introdução");
-			l.setYouTubeUrl("youtube.com");
-			l.setCourse(course);
-			course.getLessons().add(l);
+//			for (int i = 0; i < 20; i++) {
+				Course course = new Course();
+				course.setName("Java-Spring");
+				course.setCategory(Category.BACK_END);
 
-			Lesson l1 = new Lesson();
-			l1.setName("Angular");
-			l1.setYouTubeUrl("youtubecombb");
-			l1.setCourse(course);
-			course.getLessons().add(l1);
+				Lesson l = new Lesson();
+				l.setName("Introdução");
+				l.setYouTubeUrl("youtube.com");
+				l.setCourse(course);
+				course.getLessons().add(l);
 
-			courseRepository.save(course);
+				Lesson l1 = new Lesson();
+				l1.setName("Angular");
+				l1.setYouTubeUrl("youtubecombb");
+				l1.setCourse(course);
+				course.getLessons().add(l1);
+
+				courseRepository.save(course);
 
 		};
 	}
