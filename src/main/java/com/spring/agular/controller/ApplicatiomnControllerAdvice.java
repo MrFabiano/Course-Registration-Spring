@@ -44,4 +44,10 @@ public class ApplicatiomnControllerAdvice {
         }
        return "Argument type not valid";
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleIllegalArgumentException(IllegalArgumentException ex){
+        return ex.getMessage();
+    }
 }

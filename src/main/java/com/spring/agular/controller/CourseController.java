@@ -28,16 +28,18 @@ public class CourseController {
     @Autowired
     private final CourseService courseService;
 
-//    @GetMapping
-//    public CoursePageDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int pageNumber, @RequestParam(defaultValue = "10") @Positive @Max(20) int pageSize){
-//        return courseService.list(pageNumber, pageSize);
-//    }
-
-
     @GetMapping
-    public List<CourseDTO> list(){
-        return courseService.list();
+    public CoursePageDTO list(@RequestParam(defaultValue = "0")
+                              @PositiveOrZero int pageNumber,
+                              @RequestParam(defaultValue = "10")
+                              @Positive @Max(100) int pageSize){
+        return courseService.list(pageNumber, pageSize);
     }
+
+//    @GetMapping
+//    public List<CourseDTO> list(){
+//        return courseService.list();
+//    }
 
     @GetMapping("/{id}")
     public CourseDTO getById(@PathVariable @NotNull @Positive  Long id){
@@ -52,7 +54,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public CourseDTO updateCourse(@PathVariable @NotNull Long id, @RequestBody @Valid CourseDTO course){
+    public CourseDTO updateCourse(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course){
         return courseService.updateCourse(id, course);
 
 

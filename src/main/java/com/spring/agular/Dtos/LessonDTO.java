@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 public record LessonDTO(
 
+        @JsonProperty("_id")
         Long id,
 
         @NotNull
@@ -15,8 +16,8 @@ public record LessonDTO(
         @Length(min = 5, max = 100)
         String name,
 
-        @NotBlank
         @NotNull
+        @NotBlank
         @Length(min = 10, max = 100)
         String youTubeUrl) {
 }

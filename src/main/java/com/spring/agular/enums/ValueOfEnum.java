@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface  ValueOfEnum {
 
     Class<? extends Enum<?>> enumClass();
-    String message() default "deve ser qualquer um de enum {enumClass}";
+    String message() default "must be any of enum {enumClass}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     }

@@ -2,6 +2,7 @@ package com.spring.agular.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -16,15 +17,16 @@ public class Lesson {
     private Long id;
 
 
+    @NotBlank
     @NotNull
     @Length(min = 5, max = 100)
     @Column(length = 100, nullable = false)
     private String name;
 
-
+    @NotBlank
+    @NotNull
     @Length(min = 10, max = 100)
     @Column(length = 15, nullable = false)
-    @NotNull
     private String youTubeUrl;
 
 
