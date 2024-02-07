@@ -19,7 +19,6 @@ public class SpringAngularApplication {
 	}
 
 	@Bean
-	@Profile(value = "dev")
 	CommandLineRunner initDatabase(CourseRepository courseRepository) {
 		return args -> {
 			courseRepository.deleteAll();
