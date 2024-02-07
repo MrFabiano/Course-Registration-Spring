@@ -9,21 +9,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class LessonDTO {
 
-       @Field("_id")
-       private String id;
-
-//        @NotNull
-//        @NotBlank
-//        @Length(min = 5, max = 100)
-        private String name;
-
-//        @NotNull
-//        @NotBlank
-//        @Length(min = 10, max = 100)
-        private String youTubeUrl;
+       @Id
+       private String _id  = UUID.randomUUID().toString();
+       private String name;
+       private String youTubeUrl;
 
 }

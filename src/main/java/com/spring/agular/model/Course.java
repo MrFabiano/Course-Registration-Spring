@@ -12,11 +12,9 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.core.mapping.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,20 +25,19 @@ import java.util.List;
 public class Course {
 
     @Id
-    private String id;
+    private String _id;
 
     private String name;
+
 
     @Convert(converter = CategoryConverter.class)
     @ValueOfEnum(enumClass = Category.class)
     private String category;
 
-
-
     @Convert(converter = StatusConverter.class)
     private Status status = Status.ACTIVE;
 
-//    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "course_db")
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "course_db")
     private List<Lesson> lessons = new ArrayList<>();
 
 

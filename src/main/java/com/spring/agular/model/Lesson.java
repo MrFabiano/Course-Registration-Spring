@@ -6,26 +6,26 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+
+import java.util.UUID;
 
 @Data
 @Document(collection = "lesson_db")
 public class Lesson {
 
-//    @JsonProperty("_id")
-//    private String id
      @Id
-     private String id;
+     private String _id;
+     private String name;
 
+     private String youTubeUrl;
 
-    private String name;
-
-    private String youTubeUrl;
-
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "course_db", nullable = false)
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Course course;
+     @DBRef
+     private Course course;
 
 }

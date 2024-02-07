@@ -7,6 +7,7 @@ import com.spring.agular.enums.ValueOfEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -18,23 +19,14 @@ import java.util.List;
 @Setter
 public class CourseDTO{
 
+    @Field(value = "_id")
+    private String _id;
 
-       @Field("_id")
-       private String id;
+    private String name;
 
-
-//        @Length(min = 5, max = 100)
-//        @NotNull
-//        @NotBlank
-      private String name;
-
-//        @Length(max = 100)
      @ValueOfEnum(enumClass = Category.class)
      private String category;
 
-//        @NotNull
-//        @NotEmpty
-//        @Valid
-     private List<LessonDTO> lessons;
+     private List<LessonDTO> lessons = new ArrayList<>();
 
 }
