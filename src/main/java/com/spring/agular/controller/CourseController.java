@@ -17,23 +17,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
 @Validated
-@AllArgsConstructor
 public class CourseController {
 
     @Autowired
-    private final CourseService courseService;
+    private CourseService courseService;
 
     @GetMapping
-    public CoursePageDTO list(@RequestParam(defaultValue = "0")
-                              @PositiveOrZero int pageNumber,
-                              @RequestParam(defaultValue = "10")
-                              @Positive @Max(100) int pageSize){
-        return courseService.list(pageNumber, pageSize);
+    public ResponseEntity<CoursePageDTO> list(@RequestParam(defaultValue = "0")
+                                              @PositiveOrZero int pageNumber,
+                                              @RequestParam(defaultValue = "10")
+                                              @Positive @Max(100) int pageSize) {
+        return ResponseEntity.ok(courseService.list(pageNumber, pageSize));
     }
 
 //    @GetMapping
@@ -42,28 +43,39 @@ public class CourseController {
 //    }
 
     @GetMapping("/{id}")
-    public CourseDTO getById(@PathVariable @NotNull @Positive  Long id){
-       return courseService.getById(id);
+    public ResponseEntity<CourseDTO> getById(@PathVariable String id) {
+        Optional<CourseDTO> courseDTO = courseService.getById(id);
+        if(courseDTO.isPresent()){
+            return ResponseEntity.ok(courseDTO.get());
+        }
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public CourseDTO create(@RequestBody @Valid CourseDTO course){
-        return courseService.create(course);
+    public ResponseEntity<CourseDTO> create(@RequestBody @Valid CourseDTO course){
+         Optional<CourseDTO> courseDTO = courseService.create(course);
+         if(courseDTO.isPresent()){
+             return new ResponseEntity<>(courseDTO.get(), HttpStatus.CREATED);
+         }
+
+         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public CourseDTO updateCourse(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course){
-        return courseService.updateCourse(id, course);
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable String id, @RequestBody @Valid CourseDTO courseDTO){
 
-
+        Optional<CourseDTO> update = courseService.updateCourse(id, courseDTO);
+        if(update.isPresent()){
+            return ResponseEntity.ok(update.get());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CachePut
-    public void delete(@PathVariable @NotNull @Positive Long id){
+    public ResponseEntity<Void> delete(@PathVariable String id){
        courseService.delete(id);
+       return ResponseEntity.noContent().build();
     }
 }

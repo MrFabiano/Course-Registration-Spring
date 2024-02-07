@@ -7,11 +7,17 @@ import com.spring.agular.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 
-@SpringBootApplication
+@EnableMongoRepositories(basePackageClasses = 	CourseRepository.class)
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class,
+		MongoReactiveAutoConfiguration.class})
 public class SpringAngularApplication {
 
 	public static void main(String[] args) {
@@ -19,7 +25,6 @@ public class SpringAngularApplication {
 	}
 
 	@Bean
-	@Profile(value = "dev")
 	CommandLineRunner initDatabase(CourseRepository courseRepository) {
 		return args -> {
 			courseRepository.deleteAll();
@@ -27,7 +32,7 @@ public class SpringAngularApplication {
 			for (int i = 0; i < 20; i++) {
 				Course course = new Course();
 				course.setName("Java-Spring" + i);
-				course.setCategory(Category.BACK_END);
+				course.setCategory("Back-end");
 
 				Lesson l = new Lesson();
 				l.setName("Introdução");

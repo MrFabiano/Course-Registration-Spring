@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      host: cluster0.fzg9tyo.mongodb.net
+      port: 27017
+      database: courseregistration
+      username: mongodbjavaspring05
+      password: CASA_JAVA
+      authentication-database: admin

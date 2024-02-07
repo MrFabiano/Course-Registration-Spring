@@ -6,32 +6,26 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
+@Document(collection = "lesson_db")
 public class Lesson {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty("_id")
-    private Long id;
+//    @JsonProperty("_id")
+//    private String id;
+     @Id
+     @JsonProperty("_id")
+     private String id;
 
 
-    @NotBlank
-    @NotNull
-    @Length(min = 5, max = 100)
-    @Column(length = 100, nullable = false)
     private String name;
 
-    @NotBlank
-    @NotNull
-    @Length(min = 10, max = 100)
-    @Column(length = 15, nullable = false)
     private String youTubeUrl;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_db", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Course course;
 

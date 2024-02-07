@@ -1,23 +1,29 @@
 package com.spring.agular.Dtos;
 
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
-public record LessonDTO(
+@Getter
+@Setter
+public class LessonDTO {
 
-        @JsonProperty("_id")
-        Long id,
+       @JsonProperty("_id")
+       private String id;
 
-        @NotNull
-        @NotBlank
-        @Length(min = 5, max = 100)
-        String name,
+//        @NotNull
+//        @NotBlank
+//        @Length(min = 5, max = 100)
+        private String name;
 
-        @NotNull
-        @NotBlank
-        @Length(min = 10, max = 100)
-        String youTubeUrl) {
+//        @NotNull
+//        @NotBlank
+//        @Length(min = 10, max = 100)
+        private String youTubeUrl;
+
 }
