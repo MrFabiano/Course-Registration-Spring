@@ -7,14 +7,16 @@ import com.spring.agular.enums.ValueOfEnum;
 import com.spring.agular.enums.convertes.CategoryConverter;
 import com.spring.agular.enums.convertes.Status;
 import com.spring.agular.enums.convertes.StatusConverter;
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Convert;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,6 @@ import java.util.List;
 public class Course {
 
     @Id
-    @JsonProperty("_id")
     private String id;
 
     private String name;
@@ -39,7 +40,7 @@ public class Course {
     @Convert(converter = StatusConverter.class)
     private Status status = Status.ACTIVE;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "course_db")
+//    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "course_db")
     private List<Lesson> lessons = new ArrayList<>();
 
 

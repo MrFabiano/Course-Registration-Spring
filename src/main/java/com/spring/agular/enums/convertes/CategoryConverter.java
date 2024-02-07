@@ -3,6 +3,7 @@ package com.spring.agular.enums.convertes;
 import com.spring.agular.enums.Category;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+
 import java.util.stream.Stream;
 
 @Converter(autoApply = true)

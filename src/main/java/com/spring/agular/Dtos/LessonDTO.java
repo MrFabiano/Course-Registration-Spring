@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 @Setter
 public class LessonDTO {
 
-       @JsonProperty("_id")
+       @Field("_id")
        private String id;
 
 //        @NotNull

@@ -19,7 +19,7 @@ import java.util.List;
 public class CourseDTO{
 
 
-       @JsonProperty("_id")
+       @Field("_id")
        private String id;
 
 
