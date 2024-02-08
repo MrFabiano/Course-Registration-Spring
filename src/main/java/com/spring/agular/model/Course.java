@@ -1,7 +1,7 @@
 package com.spring.agular.model;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.spring.agular.enums.Category;
 import com.spring.agular.enums.ValueOfEnum;
 import com.spring.agular.enums.convertes.CategoryConverter;
@@ -11,8 +11,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Convert;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
-
-import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
 

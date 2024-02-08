@@ -2,23 +2,17 @@ package com.spring.agular.controller;
 
 import com.spring.agular.Dtos.CourseDTO;
 import com.spring.agular.Dtos.CoursePageDTO;
-import com.spring.agular.repository.CourseRepository;
 import com.spring.agular.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
