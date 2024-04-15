@@ -1,5 +1,6 @@
 package com.spring.agular.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.agular.Dtos.CourseDTO;
 import com.spring.agular.Dtos.CoursePageDTO;
 import com.spring.agular.repository.CourseRepository;
@@ -25,6 +26,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CourseController {
 
+
+
     @Autowired
     private final CourseService courseService;
 
@@ -33,6 +36,7 @@ public class CourseController {
                               @PositiveOrZero int pageNumber,
                               @RequestParam(defaultValue = "10")
                               @Positive @Max(100) int pageSize){
+
         return courseService.list(pageNumber, pageSize);
     }
 
@@ -54,7 +58,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public CourseDTO updateCourse(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course){
+    public CourseDTO updateCourse(@PathVariable @Positive Long id, @RequestBody @Valid CourseDTO course){
         return courseService.updateCourse(id, course);
 
 

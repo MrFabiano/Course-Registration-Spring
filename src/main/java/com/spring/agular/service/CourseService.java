@@ -2,9 +2,11 @@ package com.spring.agular.service;
 
 import com.spring.agular.Dtos.CourseDTO;
 import com.spring.agular.Dtos.CoursePageDTO;
+import com.spring.agular.Dtos.LessonDTO;
 import com.spring.agular.Dtos.mapper.CourseMapper;
 import com.spring.agular.exception.RecordNotFoundException;
 import com.spring.agular.model.Course;
+import com.spring.agular.model.Lesson;
 import com.spring.agular.repository.CourseRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -52,18 +54,13 @@ public class CourseService {
         return courseMapper.toDTO(courseRepository.save(courseMapper.toCourse(course)));
     }
 
-    public CourseDTO updateCourse(@NotNull  @Positive Long id, @Valid CourseDTO courseDTO) {
+    public CourseDTO updateCourse(@Positive Long id, @Valid CourseDTO courseDTO) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
-                    Course course = courseMapper.toCourse(courseDTO);
                     recordFound.setName(courseDTO.name());
                     recordFound.setCategory(courseMapper.convertCategory(courseDTO.category()));
-                    //recordFound.setLessonList(course.getLessonList());
-                    recordFound.getLessons().clear();
-                    course.getLessons().forEach(recordFound.getLessons()::add);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 }).orElseThrow(()-> new RecordNotFoundException(id));
-
          }
 
     public void delete(@NotNull @Positive Long id){

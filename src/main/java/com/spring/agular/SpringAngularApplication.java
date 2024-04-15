@@ -23,7 +23,7 @@ public class SpringAngularApplication {
 		return args -> {
 			courseRepository.deleteAll();
 
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 5; i++) {
 				Course course = new Course();
 				course.setName("Java-Spring" + i);
 				course.setCategory(Category.BACK_END);

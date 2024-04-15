@@ -38,8 +38,8 @@ public class CourseMapper {
                 lessonDTO -> {
                     var lesson = new Lesson();
                    //lesson.setId(lessonDTO.id());
-                    lesson.setName(lessonDTO.getName());
-                    lesson.setYouTubeUrl(lessonDTO.getYouTubeUrl());
+                    lesson.setName(lessonDTO.name());
+                    lesson.setYouTubeUrl(lessonDTO.youTubeUrl());
                     lesson.setCourse(course);
                     return lesson;
                 }).collect(Collectors.toList());
