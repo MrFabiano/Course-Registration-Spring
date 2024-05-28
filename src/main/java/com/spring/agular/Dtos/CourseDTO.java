@@ -1,25 +1,35 @@
 package com.spring.agular.Dtos;
 
-import com.spring.agular.enums.Category;
 import com.spring.agular.enums.ValueOfEnum;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Field;
-import java.util.ArrayList;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spring.agular.enums.Category;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+
 import java.util.List;
 
-@Getter
-@Setter
-public class CourseDTO{
+public record CourseDTO(
 
-    @Field(value = "_id")
-    private String _id;
+        @JsonProperty("_id")
+        Long id,
 
-    private String name;
+        @Length(min = 5, max = 100)
+        @NotNull
+        @NotBlank
+        String name,
 
-     @ValueOfEnum(enumClass = Category.class)
-     private String category;
+        @Length(max = 100)
+        @ValueOfEnum(enumClass = Category.class)
+        @NotNull
+        @NotBlank
+        String category,
 
-     private List<LessonDTO> lessons = new ArrayList<>();
+        @NotNull
+        @NotEmpty
+        @Valid
+        List<LessonDTO> lessons){
 
 }

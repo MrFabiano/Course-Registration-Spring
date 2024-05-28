@@ -3,18 +3,16 @@ package com.spring.agular.Dtos;
 
 
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Getter
-@Setter
-public class LessonDTO {
 
-       @Id
-       private String _id  = UUID.randomUUID().toString();
-       private String name;
-       private String youTubeUrl;
 
-}
+public record LessonDTO (
+
+       @JsonProperty("_id")
+       Long id,
+       String name,
+       String youTubeUrl
+
+
+){}

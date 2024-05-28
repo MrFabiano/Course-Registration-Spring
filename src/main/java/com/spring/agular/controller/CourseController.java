@@ -1,34 +1,43 @@
 package com.spring.agular.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.agular.Dtos.CourseDTO;
 import com.spring.agular.Dtos.CoursePageDTO;
+import com.spring.agular.repository.CourseRepository;
 import com.spring.agular.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
 @Validated
+@AllArgsConstructor
 public class CourseController {
 
+
+
     @Autowired
-    private CourseService courseService;
+    private final CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<CoursePageDTO> list(@RequestParam(defaultValue = "0")
-                                              @PositiveOrZero int pageNumber,
-                                              @RequestParam(defaultValue = "10")
-                                              @Positive @Max(100) int pageSize) {
-        return ResponseEntity.ok(courseService.list(pageNumber, pageSize));
+    public CoursePageDTO list(@RequestParam(defaultValue = "0")
+                              @PositiveOrZero int pageNumber,
+                              @RequestParam(defaultValue = "10")
+                              @Positive @Max(100) int pageSize){
+
+        return courseService.list(pageNumber, pageSize);
     }
 
 //    @GetMapping
@@ -37,39 +46,28 @@ public class CourseController {
 //    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getById(@PathVariable String id) {
-        Optional<CourseDTO> courseDTO = courseService.getById(id);
-        if(courseDTO.isPresent()){
-            return ResponseEntity.ok(courseDTO.get());
-        }
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public CourseDTO getById(@PathVariable @NotNull @Positive  Long id){
+       return courseService.getById(id);
 
     }
 
     @PostMapping
-    public ResponseEntity<CourseDTO> create(@RequestBody @Valid CourseDTO course){
-         Optional<CourseDTO> courseDTO = courseService.create(course);
-         if(courseDTO.isPresent()){
-             return new ResponseEntity<>(courseDTO.get(), HttpStatus.CREATED);
-         }
-
-         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @ResponseStatus(HttpStatus.CREATED)
+    public CourseDTO create(@RequestBody @Valid CourseDTO course){
+        return courseService.create(course);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CourseDTO> updateCourse(@PathVariable String id, @RequestBody @Valid CourseDTO courseDTO){
+    public CourseDTO updateCourse(@PathVariable @Positive Long id, @RequestBody @Valid CourseDTO course){
+        return courseService.updateCourse(id, course);
 
-        Optional<CourseDTO> update = courseService.updateCourse(id, courseDTO);
-        if(update.isPresent()){
-            return ResponseEntity.ok(update.get());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CachePut
-    public ResponseEntity<Void> delete(@PathVariable String id){
+    public void delete(@PathVariable @NotNull @Positive Long id){
        courseService.delete(id);
-       return ResponseEntity.noContent().build();
     }
 }
