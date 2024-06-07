@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 @Component
 public class CourseMapper {
 
-    public CourseDTO toDTO(Course course) {
+    public CourseDTO
+    toDTO(Course course) {
         if (course == null) {
             return null;
         }
